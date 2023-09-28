@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from config import FILENAME
+
 import json
 
 
@@ -12,8 +13,13 @@ class FileManager(ABC):
         pass
 
     @abstractmethod
-    def write(self):
+    def write(self, data):
         """Записывает в файл"""
+        pass
+
+    @abstractmethod
+    def delete(self, vacancies):
+        """Удаление вакансии"""
         pass
 
 
@@ -24,9 +30,15 @@ class JSONFileManager(FileManager):
         self.filename = FILENAME + '.json'
 
     def read(self):
-        """Считывает файл"""
-        pass
+        with open(self.filename, 'r') as file:
+            print(file.read())
 
-    def write(self):
+    def write(self, data):
         """Записывает в файл"""
+        with open(self.filename, 'a', encoding='utf-8') as file:
+            file.write(json.dumps(data))
+        return f'Файл {self.filename} создан!'
+
+    def delete(self, vacancies):
+        """Удаление вакансии"""
         pass
